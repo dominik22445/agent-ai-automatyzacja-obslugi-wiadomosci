@@ -1,4 +1,4 @@
-# AI Email Triage System
+# Agent AI – automatyzacja obsługi wiadomości
 
 ## **Opis projektu**
 
