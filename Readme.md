@@ -75,13 +75,8 @@ Gmail → Automatyczne przekazywanie wiadomości → Make Mailhook → Filtr wia
 
 ### 3. Instrukcje systemowe modelu AI
 
-<img width="312" height="192" alt="image" src="https://github.com/user-attachments/assets/bc7828bb-f404-4723-93eb-8df02b0bb653" />
+<img width="377" height="388" alt="image" src="https://github.com/user-attachments/assets/755dde33-c4cd-49ed-a13d-7d5f90979fb7" />
 
-
-<img width="312" height="297" alt="image" src="https://github.com/user-attachments/assets/c1f31e1c-9ac0-432a-be10-d00ad0baac04" />
-
-
-<img width="235" height="157" alt="image" src="https://github.com/user-attachments/assets/6d99226a-7a65-4dcf-8df4-45b5c150046b" />
 
 
 ### 4. Przykładowa wygenerowana odpowiedź
