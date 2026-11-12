@@ -1,102 +1,125 @@
-# Agent AI – automatyzacja obsługi wiadomości
+# Agent AI – automatyzacja obsługi wiadomości e-mail
 
-## **Opis projektu**
+## Opis projektu
 
-System wykorzystujący sztuczną inteligencję do analizy wiadomości email, generowania odpowiedzi oraz podejmowania decyzji, czy odpowiedź wymaga weryfikacji człowieka.
+Agent AI automatyzujący analizę wiadomości e-mail od klientów oraz przygotowywanie propozycji odpowiedzi na podstawie firmowej bazy wiedzy.
 
-Projekt wykorzystuje bazę wiedzy przechowywaną w Google Docs oraz model OpenAI do przygotowania odpowiedzi zgodnych z dostępną dokumentacją.
+System automatycznie odbiera nowe wiadomości, analizuje ich treść z wykorzystaniem modelu OpenAI i przygotowuje wersje robocze odpowiedzi w Gmailu. Pracownik może następnie sprawdzić, edytować i wysłać gotową propozycję.
 
----
+Rozwiązanie ogranicza czas poświęcany na obsługę powtarzalnych zapytań i wspiera pracowników w codziennej komunikacji z klientami.
 
-## **Problem biznesowy**
+## Problem biznesowy
 
-Wiele wiadomości klientów dotyczy prostych i powtarzalnych pytań, jednak część z nich wymaga indywidualnej oceny pracownika.
+Obsługa poczty elektronicznej często wymaga od pracowników wykonywania powtarzalnych czynności:
 
-Projekt automatyzuje analizę wiadomości oraz rozdziela zgłoszenia na:
+- czytania i analizowania każdej wiadomości,
+- wyszukiwania potrzebnych informacji w dokumentacji firmy,
+- przygotowywania odpowiedzi na podobne pytania,
+- ręcznego tworzenia wiadomości zwrotnych.
 
-* możliwe do automatycznej obsługi,
-* wymagające weryfikacji człowieka.
+Przy dużej liczbie zapytań czynności te zajmują znaczną część czasu pracy i ograniczają możliwość skupienia się na bardziej wymagających zadaniach.
 
----
+## Zastosowane rozwiązanie
 
-## **Technologie**
+Agent AI automatyzuje proces przygotowywania odpowiedzi na wiadomości klientów.
 
-* Make
-* OpenAI API
-* Gmail
-* Google Docs
+Po otrzymaniu nowej wiadomości system:
 
----
+1. Automatycznie odbiera wiadomość za pośrednictwem mechanizmu Mailhook.
+2. Pobiera informacje z firmowej bazy wiedzy przechowywanej w Google Docs.
+3. Przekazuje treść wiadomości oraz bazę wiedzy do modelu OpenAI.
+4. Analizuje zapytanie i generuje propozycję odpowiedzi.
+5. Tworzy wersję roboczą wiadomości w Gmailu.
 
-## **Architektura rozwiązania**
+Pracownik otrzymuje gotowy draft, który może zweryfikować, zmodyfikować i wysłać do klienta.
 
-Klient → Gmail → Google Docs (baza wiedzy) → OpenAI API → Gmail (draft odpowiedzi)
+System nie wysyła wiadomości automatycznie.
+
+## Architektura systemu
+
+**Przepływ danych:**
+
+Gmail → Automatyczne przekazywanie wiadomości → Make Mailhook → Filtr wiadomości → Google Docs → OpenAI API → Gmail (wersja robocza odpowiedzi)
+
+### Wykorzystane komponenty
+
+| Komponent | Rola w systemie |
+|---|---|
+| Gmail | Odbieranie wiadomości klientów i przechowywanie przygotowanych odpowiedzi |
+| Make Mailhook | Automatyczne uruchamianie scenariusza po otrzymaniu przekazanej wiadomości |
+| Make | Integracja usług i koordynacja całego procesu |
+| Google Docs | Przechowywanie firmowej bazy wiedzy |
+| OpenAI API | Analiza wiadomości i generowanie propozycji odpowiedzi |
+
+## Funkcjonalności
+
+- **Automatyczne uruchamianie** – system reaguje na nowe wiadomości bez konieczności cyklicznego sprawdzania skrzynki.
+- **Filtrowanie wiadomości** – możliwość pomijania wybranych wiadomości automatycznych i wiadomości wysłanych z własnego konta.
+- **Analiza wiadomości** – model AI interpretuje treść zapytania klienta.
+- **Firmowa baza wiedzy** – odpowiedzi są przygotowywane na podstawie informacji przechowywanych w Google Docs.
+- **Generowanie odpowiedzi** – AI tworzy propozycję odpowiedzi dopasowaną do otrzymanego zapytania.
+- **Tworzenie wersji roboczych** – gotowe propozycje są zapisywane w Gmailu.
+- **Kontrola pracownika** – każda odpowiedź może zostać sprawdzona i edytowana przed wysłaniem.
+
+## Przykładowe działanie systemu
+
+### 1. Scenariusz automatyzacji w Make
+
+<img width="856" height="268" alt="image" src="https://github.com/user-attachments/assets/6f1cfb24-8f02-4d68-b9e6-2cc828400a82" />
 
 
+### 2. Baza wiedzy przykładowej firmy
 
----
+<img width="800" height="831" alt="image" src="https://github.com/user-attachments/assets/2c97b4f2-6bc1-49f6-a5cd-6ac20d15d1a8" />
 
-## **Funkcje**
 
-* analiza treści wiadomości email,
-* wykorzystanie bazy wiedzy zapisanej w Google Docs,
-* generowanie odpowiedzi przez AI,
+### 3. Instrukcje systemowe modelu AI
 
----
+<img width="312" height="192" alt="image" src="https://github.com/user-attachments/assets/bc7828bb-f404-4723-93eb-8df02b0bb653" />
 
-## Przykładowe działanie
 
-### Workflow w Make
+<img width="312" height="297" alt="image" src="https://github.com/user-attachments/assets/c1f31e1c-9ac0-432a-be10-d00ad0baac04" />
 
-![Workflow](make-workflow.png)
 
-### Fragment bazy wiedzy
+<img width="235" height="157" alt="image" src="https://github.com/user-attachments/assets/6d99226a-7a65-4dcf-8df4-45b5c150046b" />
 
-![Baza wiedzy](knowledge-base.png)
 
-### Początek promptu systemowego
+### 4. Przykładowa wygenerowana odpowiedź
 
-![Początek promptu](prompt-overview.png)
+<img width="292" height="327" alt="image" src="https://github.com/user-attachments/assets/6a3c3e16-c0ed-4752-8f41-a911abccce7d" />
 
-### Końcówka promptu systemowego
 
-![Końcówka promptu](prompt-classification-rules.png)
+### 5. Wersja robocza w Gmailu
 
-### Wynik klasyfikacji – odpowiedź automatyczna
+<img width="603" height="619" alt="image" src="https://github.com/user-attachments/assets/c50a9d2e-22aa-4d4d-b7b6-b65e5adc46f2" />
 
-![JSON automatyczna odpowiedź](automatic-response-result.png)
-
-### Automatyczna odpowiedź dla klienta
-
-![Odpowiedź automatyczna](automatic-response-email.png)
-
-### Wynik klasyfikacji – wymagana weryfikacja
-
-![JSON do weryfikacji](human-review-result.png)
-
-### Odpowiedź przekazana do weryfikacji
-
-![Odpowiedź do weryfikacji](human-review-email.png)
-
----
 
 ## Ograniczenia
 
-* skuteczność odpowiedzi zależy od jakości i kompletności bazy wiedzy,
-* system odpowiada wyłącznie na podstawie dostarczonych informacji i nie posiada dostępu do zewnętrznych systemów firmy,
-* błędnie sformułowane lub niejednoznaczne wiadomości mogą zostać zakwalifikowane do weryfikacji przez człowieka,
-* system nie potwierdza terminów, dostępności ani innych danych dynamicznych bez odpowiednich informacji wejściowych,
-* odpowiedzi generowane przez AI mogą wymagać dodatkowej kontroli w przypadku nietypowych lub złożonych zapytań,
-* projekt nie obsługuje załączników ani analizy dokumentów przesyłanych przez klientów,
-* jakość odpowiedzi zależy od poprawności promptu oraz zdefiniowanych reguł decyzyjnych,
-* projekt został przygotowany jako demonstracja wykorzystania AI do automatyzacji obsługi klienta.
+- Jakość generowanych odpowiedzi zależy od kompletności i aktualności firmowej bazy wiedzy.
+- System nie ma dostępu do zewnętrznych systemów firmy, takich jak CRM, systemy rezerwacyjne czy systemy magazynowe.
+- Nie potwierdza dynamicznych informacji, takich jak aktualna dostępność usług, terminy czy status zamówień, jeśli nie otrzyma odpowiednich danych.
+- Nietypowe i złożone zapytania mogą wymagać dodatkowej weryfikacji przez pracownika.
+- System nie obsługuje analizy załączników ani dokumentów przesyłanych przez klientów.
+- Odpowiedzi generowane przez AI wymagają sprawdzenia przed wysłaniem.
 
+Projekt ma charakter demonstracyjny i przedstawia możliwość wykorzystania AI do automatyzacji procesów związanych z obsługą klienta.
 
----
+## Technologie
 
-## **Czego nauczyłem się podczas realizacji projektu**
+- Make (Integromat)
+- OpenAI API
+- Gmail
+- Google Docs
+- Webhooks / Mailhook
 
-* integracji Gmail z Make,
-* wykorzystania OpenAI API w procesach biznesowych,
-* budowy systemów wspierających obsługę klienta,
+## Czego nauczyłem się podczas realizacji projektu
 
+- projektowania automatyzacji procesów biznesowych,
+- integracji usług Google z Make,
+- wykorzystywania webhooków do uruchamiania scenariuszy,
+- integracji modeli językowych przez OpenAI API,
+- projektowania promptów systemowych,
+- przekazywania i mapowania danych pomiędzy modułami,
+- budowania systemów AI wykorzystujących zewnętrzną bazę wiedzy,
+- testowania i optymalizacji przepływów automatyzacji.
