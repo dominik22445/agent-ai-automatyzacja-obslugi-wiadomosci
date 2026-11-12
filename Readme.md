@@ -77,6 +77,10 @@ Gmail → Automatyczne przekazywanie wiadomości → Make Mailhook → Filtr wia
 
 <img width="377" height="388" alt="image" src="https://github.com/user-attachments/assets/755dde33-c4cd-49ed-a13d-7d5f90979fb7" />
 
+
+
+
+
 <img width="355" height="224" alt="image" src="https://github.com/user-attachments/assets/ad8e04ef-339e-4d7b-8221-5490f5b3171e" />
 
 
